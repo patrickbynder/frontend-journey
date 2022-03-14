@@ -19,9 +19,44 @@ const Header = () => {
 };
 
 function App() {
+    const [BackgroundColor, setBackgroundColor] = useState('Blue');
+    const [ButtonBackgroundColor, setButtonBackgroundColor] = useState('White');
+    const [ButtonTextColor, setButtonColor] = useState('Black');
+
     return (
-        <div className="App">
+        <div style={{ background: BackgroundColor }} className="App">
             <Header />
+            <button
+                style={{
+                    background: ButtonBackgroundColor,
+                    color: ButtonTextColor,
+                }}
+                onClick={() => setBackgroundColor('Red')}
+            >
+                Click Button red
+            </button>
+            <button
+                style={{
+                    background: ButtonBackgroundColor,
+                    color: ButtonTextColor,
+                }}
+                onMouseEnter={() => setBackgroundColor('Green')}
+            >
+                Hover Button Green
+            </button>
+
+            <button
+                style={{
+                    background: ButtonBackgroundColor,
+                    color: ButtonTextColor,
+                }}
+                onClick={() => {
+                    setButtonBackgroundColor('Black');
+                    setButtonColor('White');
+                }}
+            >
+                Change buttons to dark
+            </button>
         </div>
     );
 }
