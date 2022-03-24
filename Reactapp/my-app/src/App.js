@@ -1,87 +1,53 @@
 import React, { useState } from 'react';
-import images from './images/images.jpg';
+import styled from 'styled-components';
+
 import './App.css';
-
-const Header = () => {
-    const [currentPage, setCurrentPage] = useState('Home');
-
-    const currentPageText = `Your current page is: ${currentPage}`;
-
-    return (
-        <>
-            <div>{currentPageText}</div>
-
-            <button onClick={() => setCurrentPage('bynderpage')}>
-                Click me
-            </button>
-        </>
-    );
-};
-
-const Content = () => {
-    return (
-        <>
-            <div>
-                <h1>This is the new content area</h1>
-            </div>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                id metus sem. Donec sem mi, porttitor vel purus vestibulum,
-                interdum fermentum massa. Donec rutrum in urna et vestibulum. Ut
-                sem orci, sollicitudin vitae iaculis in, tincidunt eget orci.
-                Nam nec bibendum libero. Fusce aliquam interdum massa, at
-                vehicula nunc pellentesque vel. Integer ac ex augue. Suspendisse
-                potenti. Mauris at magna at quam placerat congue vel a est. In
-                et tortor eget sapien eleifend cursus eget sed est.
-            </p>
-            <img height="200px" src={images} alt="image" />;
-        </>
-    );
-};
+import Header from './components/Header';
+import Content from './components/Content';
+import Footer from './components/Footer';
+import Sidebar from './components/Sidebar';
+import { StyledButton } from './components/StyledButton';
 
 function App() {
-    const [BackgroundColor, setBackgroundColor] = useState('Blue');
-    const [ButtonBackgroundColor, setButtonBackgroundColor] = useState('White');
-    const [ButtonTextColor, setButtonColor] = useState('Black');
+    const [sidebarEnabled, setisSidebarEnabled] = useState(false);
+    const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
+
+    const ToggleSidebar = () => {
+        setisSidebarEnabled(!sidebarEnabled);
+    };
+
+    const ToggleDarkMode = () => {
+        setIsDarkModeEnabled(!isDarkModeEnabled);
+    };
 
     return (
-        <div style={{ background: BackgroundColor }} className="App">
-            <Header />
-            <button
-                style={{
-                    background: ButtonBackgroundColor,
-                    color: ButtonTextColor,
-                }}
-                onClick={() => setBackgroundColor('Red')}
-            >
-                Click Button red
-            </button>
-            <button
-                style={{
-                    background: ButtonBackgroundColor,
-                    color: ButtonTextColor,
-                }}
-                onMouseEnter={() => setBackgroundColor('Green')}
-            >
-                Hover Button Green
-            </button>
+        <Wrapper isDarkModeEnabled={isDarkModeEnabled}>
+            <Header
+                ToggleDarkMode={ToggleDarkMode}
+                isDarkModeEnabled={isDarkModeEnabled}
+            ></Header>
+            {sidebarEnabled && <Sidebar>This is a calculator</Sidebar>}
 
-            <button
-                style={{
-                    background: ButtonBackgroundColor,
-                    color: ButtonTextColor,
-                }}
-                onClick={() => {
-                    setButtonBackgroundColor('Black');
-                    setButtonColor('White');
-                }}
-            >
-                Change buttons to dark
-            </button>
-
+            <StyledButton onClick={ToggleSidebar}>Sidebar Button</StyledButton>
             <Content />
-        </div>
+            <Footer />
+        </Wrapper>
     );
 }
+
+const Wrapper = styled.div`
+    display: flex;
+
+    flex-flow: row wrap;
+    margin: auto;
+    gap: 24px 12px;
+    max-width: 1280px;
+    background-color: ${(props) => (props.isDarkModeEnabled ? `#000` : '#fff')};
+    color: ${(props) => (props.isDarkModeEnabled ? `#fff` : '#000')};
+
+    & > * {
+        padding: 12px;
+    }
+`;
 
 export default App;
