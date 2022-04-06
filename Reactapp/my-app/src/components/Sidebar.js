@@ -16,7 +16,10 @@ const Sidebar = ({ children }) => {
         setResult(firstNumber * secondNumber);
     };
 
-    // console.log('formData');
+    const mockData = [
+        { name: 'Patrick', pet: 'dog' },
+        { name: 'Brian', pet: 'cat' },
+    ];
 
     return (
         <SidebarWrapper>
@@ -40,12 +43,26 @@ const Sidebar = ({ children }) => {
             </StyledButton>
 
             <p>this is the outcome {result}</p>
+
+            <p>Array data:</p>
+            {mockData.map((item, index) => (
+                <dataObject key={index} data={item}>
+                    <NameHolder>{item.name}</NameHolder>
+
+                    {item.pet}
+                </dataObject>
+            ))}
         </SidebarWrapper>
     );
 };
 
 export const SidebarWrapper = styled.div`
     flex: 1 auto;
+`;
+
+const NameHolder = styled.div`
+    font-size: 18px;
+    font-weight: bold;
 `;
 
 export default Sidebar;

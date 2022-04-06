@@ -7,6 +7,8 @@ import Content from './components/Content';
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
 import { StyledButton } from './components/StyledButton';
+import DataFetch from './components/DataFetch';
+import TodoList from './components/TodoList';
 
 function App() {
     const [sidebarEnabled, setisSidebarEnabled] = useState(false);
@@ -30,7 +32,9 @@ function App() {
 
             <StyledButton onClick={ToggleSidebar}>Sidebar Button</StyledButton>
             <Content />
+            <DataFetch />
             <Footer />
+            <TodoList />
         </Wrapper>
     );
 }
