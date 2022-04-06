@@ -1,26 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const TodoForm = () => {
-    const text = '';
+    const [name, setName] = useState('');
+    const [guests, setGuests] = useState([]);
 
-    const handleChange = (event) => {
-        this.state({
-            [event.target.name]: event.target.value,
-        });
+    const onClick = () => {
+        setName('');
+        setGuests([...guests, name]);
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-    };
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
+            <h3>Todo List</h3>
+            <ul>
+                {guests.map((guest) => (
+                    <li key={guest}>{guest}</li>
+                ))}
+            </ul>
             <input
-                name="text"
-                value={text}
-                onChange={handleChange}
-                placeholder="Todo..."
+                value={name}
+                onChange={(event) => setName(event.target.value)}
             />
-        </form>
+            <button onClick={onClick}> Add guest </button>
+        </div>
     );
 };
 
