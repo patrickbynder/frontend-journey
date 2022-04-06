@@ -1,41 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default class DataFetch extends React.Component {
-    state = {
-        loading: true,
-        people: [],
-    };
+const DataFetch = () => {
+    const [loading, setIsLoading] = useState(true);
+    const [people, setPeople] = useState([]);
 
-    async componentDidMount() {
+    useEffect(() => {
         const url = 'https://api.randomuser.me/?results=5';
-        const response = await fetch(url);
-        const data = await response.json();
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => setPeople(data.results));
 
-        this.setState({ people: data.results, loading: false });
-    }
+        setIsLoading(false);
+    }, []);
 
-    render() {
-        return (
-            <div>
-                {this.state.loading || !this.state.people ? (
-                    <div>Loading... </div>
-                ) : (
-                    <div>
-                        {this.state.people
-                            .sort((a, b) =>
-                                a.name.first > b.name.first ? 1 : -1
-                            )
-                            .map((person) => (
-                                <div key={person.login.uuid}>
-                                    <div>{person.name.title}</div>
-                                    <div>{person.name.first}</div>
-                                    <div>{person.name.last}</div>
-                                    <img src={person.picture.large} />
-                                </div>
-                            ))}
-                    </div>
-                )}
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            {loading || people.length === 0 ? (
+                <div>Loading... </div>
+            ) : (
+                <div>
+                    {people
+                        .sort((a, b) => (a.name.first > b.name.first ? 1 : -1))
+                        .map((person) => (
+                            <div key={person.login.uuid}>
+                                <div>{person.name.title}</div>
+                                <div>{person.name.first}</div>
+                                <div>{person.name.last}</div>
+                                <img src={person.picture.large} />
+                            </div>
+                        ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default DataFetch;
