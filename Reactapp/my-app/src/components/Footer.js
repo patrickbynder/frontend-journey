@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Axios from 'axios';
+import axios from 'axios';
 
 function Footer() {
     const [userData, setUserData] = useState('');
 
     const getData = () => {
-        Axios.get('https://randomuser.me/api/').then((response) => {
+        axios.get('https://randomuser.me/api/').then((response) => {
             console.log(response);
             setUserData(
                 response.data.results[0].name.first +

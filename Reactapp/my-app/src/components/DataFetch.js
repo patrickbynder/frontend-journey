@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
+import { API } from '../helpers/api';
+import ShowPerson from './ShowPerson';
+
 const DataFetch = () => {
     const [loading, setIsLoading] = useState(true);
     const [people, setPeople] = useState([]);
 
     useEffect(() => {
-        const url = 'https://api.randomuser.me/?results=5';
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => setPeople(data.results));
-
-        setIsLoading(false);
+        API.fetchUsers()
+            .then((data) => {
+                setPeople(data.results);
+            })
+            .catch((errorMessage) => console.log('ERROR: ', errorMessage))
+            .finally(() => setIsLoading(false));
     }, []);
 
     return (
@@ -22,12 +25,10 @@ const DataFetch = () => {
                     {people
                         .sort((a, b) => (a.name.first > b.name.first ? 1 : -1))
                         .map((person) => (
-                            <div key={person.login.uuid}>
-                                <div>{person.name.title}</div>
-                                <div>{person.name.first}</div>
-                                <div>{person.name.last}</div>
-                                <img src={person.picture.large} />
-                            </div>
+                            <ShowPerson
+                                key={person.login.uuid}
+                                person={person}
+                            />
                         ))}
                 </div>
             )}
