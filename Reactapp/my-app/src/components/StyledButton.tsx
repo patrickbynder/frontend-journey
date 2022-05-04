@@ -1,12 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface StyledButtonProps {
-  isDarkModeEnabled?: boolean;
+    isDarkModeEnabled?: boolean;
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
-  padding: 10px;
-  background-color: ${(props) => (props.isDarkModeEnabled ? `#000` : "#fff")};
-  color: ${(props) => (props.isDarkModeEnabled ? `#fff` : "#000")};
+    padding: 10px;
+    background-color: ${(props) => (props.isDarkModeEnabled ? `#000` : '#fff')};
+    color: ${(props) => (props.isDarkModeEnabled ? `#fff` : '#000')};
 `;

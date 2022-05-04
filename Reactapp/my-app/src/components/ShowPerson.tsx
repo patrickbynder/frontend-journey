@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ShowPerson = ({ person }) => {
+import { Person } from '../types';
+
+interface ShowPersonProps {
+    person: Person;
+}
+
+const ShowPerson = ({ person }: ShowPersonProps) => {
     return (
         <PersonBox>
             <PersonTitle>{person.name.title}</PersonTitle>

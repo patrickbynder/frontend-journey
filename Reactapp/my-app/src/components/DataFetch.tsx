@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { API } from '../helpers/api';
 import ShowPerson from './ShowPerson';
+import { Person } from '../types';
 
 const DataFetch = () => {
     const [loading, setIsLoading] = useState(true);
-    const [people, setPeople] = useState([]);
+    const [people, setPeople] = useState<any[]>([]);
 
     useEffect(() => {
         API.fetchUsers()
@@ -24,7 +25,7 @@ const DataFetch = () => {
                 <div>
                     {people
                         .sort((a, b) => (a.name.first > b.name.first ? 1 : -1))
-                        .map((person) => (
+                        .map((person: Person) => (
                             <ShowPerson
                                 key={person.login.uuid}
                                 person={person}

@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { StyledButton } from './StyledButton';
 
-const Sidebar = ({ children }) => {
-    const [firstNumber, setFirstNumber] = useState();
-    const [secondNumber, setSecondNumber] = useState();
-    const [result, setResult] = useState(0);
-    // const outcomeSum = (e) => {
-    //     e.preventDefault();
-    //     const showOutcome = firstNumber * secondNumber;
-    //     console.log(showOutcome);
-    // };
+interface SidebarProps {
+    children: React.ReactNode;
+}
+
+const Sidebar = ({ children }: SidebarProps) => {
+    const [firstName, setFirstName] = useState<string | undefined>();
+    const [lastName, setLastName] = useState<string | undefined>();
+    const [result, setResult] = useState<string | undefined>();
 
     const handleOnSubmit = () => {
-        setResult(firstNumber * secondNumber);
+        if (firstName && lastName) {
+            setResult(firstName + lastName);
+        }
     };
 
     const mockData = [
@@ -27,16 +28,16 @@ const Sidebar = ({ children }) => {
             <input
                 required
                 placeholder="Number one"
-                type="number"
-                value={firstNumber}
-                onChange={(e) => setFirstNumber(e.target.value)}
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
             />
             <input
                 required
                 placeholder="Number two"
-                type="number"
-                value={secondNumber}
-                onChange={(e) => setSecondNumber(e.target.value)}
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
             />
             <StyledButton onClick={handleOnSubmit}>
                 Make this calcuation
@@ -46,11 +47,10 @@ const Sidebar = ({ children }) => {
 
             <p>Array data:</p>
             {mockData.map((item, index) => (
-                <dataObject key={index} data={item}>
+                <span key={index}>
                     <NameHolder>{item.name}</NameHolder>
-
                     {item.pet}
-                </dataObject>
+                </span>
             ))}
         </SidebarWrapper>
     );

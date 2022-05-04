@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const TodoForm = () => {
     const [name, setName] = useState('');
-    const [guests, setGuests] = useState([]);
+    const [guests, setGuests] = useState<any[]>([]);
 
     const onClick = () => {
         setName('');
